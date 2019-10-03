@@ -50,8 +50,15 @@
         <!-- https://mvnrepository.com/artifact/org.axonframework.extensions.kafka/axon-kafka-spring-boot-starter -->
         <dependency>
             <groupId>org.axonframework.extensions.kafka</groupId>
-            <artifactId>axon-kafka-spring-boot-starter</artifactId>
+            <artifactId>axon-kafka-spring-boot-autoconfigure</artifactId>
             <version>4.0-RC2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.axonframework/axon-kafka -->
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-kafka</artifactId>
+            <version>4.0-M2</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
