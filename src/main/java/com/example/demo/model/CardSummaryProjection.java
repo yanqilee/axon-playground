@@ -13,6 +13,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 @Component
+@ProcessingGroup("test")
 public class CardSummaryProjection {
 
     private final List<CardSummary> cardSummaries = new CopyOnWriteArrayList<>();
