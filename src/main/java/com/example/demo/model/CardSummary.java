@@ -1,10 +1,18 @@
 package com.example.demo.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class CardSummary {
 
-    private final String id;
-    private final Integer initialAmount;
-    private final Integer remainingAmount;
+    @Id
+    private String id;
+    private Integer initialAmount;
+    private Integer remainingAmount;
+
+    public CardSummary() {
+    }
 
     public CardSummary(String id, Integer initialAmount, Integer remainingAmount) {
         this.id = id;

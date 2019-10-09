@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -23,16 +24,15 @@ public class GiftCardController {
 
     @GetMapping("/issue/{amount}")
     public IssueCmd issue(@PathVariable(value = "amount") Integer amount) {
-        IdGenerator.increment();
-        IssueCmd issueCmd = new IssueCmd(Integer.toString(IdGenerator.getId()), amount);
+        IssueCmd issueCmd = new IssueCmd(UUID.randomUUID().toString(), amount);
         redeemService.issue(issueCmd);
 
         return issueCmd;
     }
 
     @RequestMapping("/redeem/{id}/{amount}")
-    public RedeemCmd redeem(@PathVariable(value = "id") Integer id, @PathVariable(value = "amount") Integer amount) {
-        RedeemCmd redeemCmd = new RedeemCmd(Integer.toString(id), amount);
+    public RedeemCmd redeem(@PathVariable(value = "id") String id, @PathVariable(value = "amount") Integer amount) {
+        RedeemCmd redeemCmd = new RedeemCmd(id, amount);
         redeemService.redeem(redeemCmd);
 
         return redeemCmd;

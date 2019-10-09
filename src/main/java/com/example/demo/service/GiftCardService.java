@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.command.IssueCmd;
 import com.example.demo.command.RedeemCmd;
-import com.example.demo.controller.IdGenerator;
 import com.example.demo.model.CardSummary;
 import com.example.demo.query.FetchCardSummariesQuery;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -33,7 +32,7 @@ public class GiftCardService {
     }
 
     public List<CardSummary> query() throws ExecutionException, InterruptedException {
-        return queryGateway.query(new FetchCardSummariesQuery(IdGenerator.getId(), 0),
+        return queryGateway.query(new FetchCardSummariesQuery(100, 0),
                 ResponseTypes.multipleInstancesOf(CardSummary.class)).get();
     }
 }
