@@ -4,6 +4,7 @@ import com.example.demo.command.IssueCmd;
 import com.example.demo.command.RedeemCmd;
 import com.example.demo.model.CardSummary;
 import com.example.demo.query.FetchCardSummariesQuery;
+import lombok.AllArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
@@ -13,15 +14,11 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
+@AllArgsConstructor
 public class GiftCardService {
 
     private final CommandGateway commandGateway;
     private final QueryGateway queryGateway;
-
-    public GiftCardService(CommandGateway commandGateway, QueryGateway queryGateway) {
-        this.commandGateway = commandGateway;
-        this.queryGateway = queryGateway;
-    }
 
     public String redeem(RedeemCmd redeemCmd) {
         return commandGateway.sendAndWait(redeemCmd);

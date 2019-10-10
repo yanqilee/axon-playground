@@ -4,6 +4,7 @@ import com.example.demo.command.IssueCmd;
 import com.example.demo.command.RedeemCmd;
 import com.example.demo.event.IssuedEvt;
 import com.example.demo.event.RedeemedEvt;
+import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -11,15 +12,12 @@ import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 
 @Aggregate(snapshotTriggerDefinition = "mySnapshotTriggerDefinition")
+@NoArgsConstructor
 public class GiftCard {
 
-    @AggregateIdentifier // (1)
+    @AggregateIdentifier
     private String id;
     private int remainingValue;
-
-    public GiftCard() {
-        // (2)
-    }
 
     @CommandHandler // (3)
     public GiftCard(IssueCmd cmd) {

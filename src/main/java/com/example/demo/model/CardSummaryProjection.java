@@ -3,6 +3,7 @@ package com.example.demo.model;
 import com.example.demo.event.IssuedEvt;
 import com.example.demo.event.RedeemedEvt;
 import com.example.demo.query.FetchCardSummariesQuery;
+import lombok.AllArgsConstructor;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Component;
@@ -10,13 +11,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class CardSummaryProjection {
 
     private final CardSummaryRepository cardSummaryRepository;
-
-    public CardSummaryProjection(CardSummaryRepository cardSummaryRepository) {
-        this.cardSummaryRepository = cardSummaryRepository;
-    }
 
     @EventHandler // (1)
     public void on(IssuedEvt evt) {
