@@ -19,13 +19,13 @@ public class GiftCard {
     private String id;
     private int remainingValue;
 
-    @CommandHandler // (3)
+    @CommandHandler
     public GiftCard(IssueCmd cmd) {
         if (cmd.getAmount() <= 0) throw new IllegalArgumentException("amount <= 0");
         AggregateLifecycle.apply(new IssuedEvt(cmd.getId(), cmd.getAmount())); // (4)
     }
 
-    @EventSourcingHandler // (5)
+    @EventSourcingHandler
     public void on(IssuedEvt evt) {
         id = evt.getId();
         remainingValue = evt.getAmount();
