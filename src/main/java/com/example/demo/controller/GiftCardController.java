@@ -30,7 +30,7 @@ public class GiftCardController {
         return issueCmd;
     }
 
-    @RequestMapping("/redeem/{id}/{amount}")
+    @GetMapping("/redeem/{id}/{amount}")
     public RedeemCmd redeem(@PathVariable(value = "id") String id, @PathVariable(value = "amount") Integer amount) {
         RedeemCmd redeemCmd = new RedeemCmd(id, amount);
         redeemService.redeem(redeemCmd);
@@ -38,7 +38,7 @@ public class GiftCardController {
         return redeemCmd;
     }
 
-    @RequestMapping("/summary")
+    @GetMapping("/summary")
     public List<CardSummary> summary() throws ExecutionException, InterruptedException {
         return redeemService.query();
     }
