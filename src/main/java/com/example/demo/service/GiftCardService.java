@@ -20,12 +20,12 @@ public class GiftCardService {
     private final CommandGateway commandGateway;
     private final QueryGateway queryGateway;
 
-    public String redeem(RedeemCmd redeemCmd) {
-        return commandGateway.sendAndWait(redeemCmd);
+    public void redeem(RedeemCmd redeemCmd) {
+        commandGateway.sendAndWait(redeemCmd);
     }
 
-    public String issue(IssueCmd issueCmd) {
-        return commandGateway.sendAndWait(issueCmd);
+    public void issue(IssueCmd issueCmd) {
+        commandGateway.sendAndWait(issueCmd);
     }
 
     public List<CardSummary> query() throws ExecutionException, InterruptedException {
