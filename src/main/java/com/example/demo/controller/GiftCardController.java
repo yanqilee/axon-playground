@@ -4,10 +4,12 @@ import com.example.demo.command.IssueCmd;
 import com.example.demo.command.RedeemCmd;
 import com.example.demo.model.CardSummary;
 import com.example.demo.service.GiftCardService;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -19,23 +21,23 @@ public class GiftCardController {
         this.redeemService = redeemService;
     }
 
-    @RequestMapping("/issue")
-    public String issue() {
-        redeemService.issue(new IssueCmd("gc1", 100));
-        redeemService.issue(new IssueCmd("gc2", 50));
+    @GetMapping("/issue/{amount}")
+    public IssueCmd issue(@PathVariable(value = "amount") Integer amount) {
+        IssueCmd issueCmd = new IssueCmd(UUID.randomUUID().toString(), amount);
+        redeemService.issue(issueCmd);
 
-        return "Success";
+        return issueCmd;
     }
 
-    @RequestMapping("/redeem")
-    public String redeem() {
-        redeemService.redeem(new RedeemCmd("gc1", 10));
-        redeemService.redeem(new RedeemCmd("gc2", 20));
+    @GetMapping("/redeem/{id}/{amount}")
+    public RedeemCmd redeem(@PathVariable(value = "id") String id, @PathVariable(value = "amount") Integer amount) {
+        RedeemCmd redeemCmd = new RedeemCmd(id, amount);
+        redeemService.redeem(redeemCmd);
 
-        return "Success";
+        return redeemCmd;
     }
 
-    @RequestMapping("/summary")
+    @GetMapping("/summary")
     public List<CardSummary> summary() throws ExecutionException, InterruptedException {
         return redeemService.query();
     }

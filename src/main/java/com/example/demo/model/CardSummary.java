@@ -1,39 +1,22 @@
 package com.example.demo.model;
 
+import lombok.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CardSummary {
 
-    private final String id;
-    private final Integer initialAmount;
-    private final Integer remainingAmount;
-
-    public CardSummary(String id, Integer initialAmount, Integer remainingAmount) {
-        this.id = id;
-        this.initialAmount = initialAmount;
-        this.remainingAmount = remainingAmount;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public Integer getInitialAmount() {
-        return initialAmount;
-    }
-
-    public Integer getRemainingAmount() {
-        return remainingAmount;
-    }
+    @Id
+    private String id;
+    private Integer initialAmount;
+    private Integer remainingAmount;
 
     public CardSummary deductAmount(Integer toBeDeducted) {
         return new CardSummary(id, initialAmount, remainingAmount - toBeDeducted);
-    }
-
-    @Override
-    public String toString() {
-        return "CardSummary{" +
-                "id='" + id + '\'' +
-                ", initialAmount=" + initialAmount +
-                ", remainingAmount=" + remainingAmount +
-                '}';
     }
 }

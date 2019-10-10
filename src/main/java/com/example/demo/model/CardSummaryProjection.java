@@ -3,43 +3,39 @@ package com.example.demo.model;
 import com.example.demo.event.IssuedEvt;
 import com.example.demo.event.RedeemedEvt;
 import com.example.demo.query.FetchCardSummariesQuery;
-import org.axonframework.config.ProcessingGroup;
+import lombok.AllArgsConstructor;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.queryhandling.QueryHandler;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Collectors;
 
 @Component
+@AllArgsConstructor
 public class CardSummaryProjection {
 
-    private final List<CardSummary> cardSummaries = new CopyOnWriteArrayList<>();
+    private final CardSummaryRepository cardSummaryRepository;
 
     @EventHandler // (1)
     public void on(IssuedEvt evt) {
         CardSummary cardSummary = new CardSummary(evt.getId(), evt.getAmount(), evt.getAmount());
-        cardSummaries.add(cardSummary);
+        cardSummaryRepository.save(cardSummary);
     }
 
     @EventHandler
     public void on(RedeemedEvt evt) {
-        cardSummaries.stream()
-                .filter(cs -> evt.getId().equals(cs.getId()))
+        cardSummaryRepository.findAllById(evt.getId())
+                .stream()
                 .findFirst()
                 .ifPresent(cardSummary -> {
                     CardSummary updatedCardSummary = cardSummary.deductAmount(evt.getAmount());
-                    cardSummaries.remove(cardSummary);
-                    cardSummaries.add(updatedCardSummary);
+                    cardSummaryRepository.delete(cardSummary);
+                    cardSummaryRepository.save(updatedCardSummary);
                 });
     }
 
     @QueryHandler // (2)
     public List<CardSummary> fetch(FetchCardSummariesQuery query) {
-        return cardSummaries.stream()
-                .skip(query.getOffset())
-                .limit(query.getSize())
-                .collect(Collectors.toList());
+        return cardSummaryRepository.findAll();
     }
 }
