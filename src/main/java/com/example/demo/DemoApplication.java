@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DemoApplication {
 
+	// This allows event replay to happen on app startup
 	@Autowired
 	public void configureInMemoryTokenStore(EventProcessingConfigurer configurer) {
 		configurer.registerTokenStore(configuration -> new InMemoryTokenStore());
