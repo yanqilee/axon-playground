@@ -13,24 +13,29 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SnapshotConfig {
 
-    @Autowired
-    private EventStore eventStore;
+//    @Autowired
+//    private EventStore eventStore;
 
     @Bean
     public SpringAggregateSnapshotterFactoryBean springAggregateSnapshotterFactoryBean() {
         return new SpringAggregateSnapshotterFactoryBean();
     }
 
-    @Bean(name = "giftCardRepository")
-    public Repository<GiftCard> giftCardRepository(Snapshotter snapshotter) {
-        return EventSourcingRepository.builder(GiftCard.class)
-                .eventStore(eventStore)
-                .snapshotTriggerDefinition(new EventCountSnapshotTriggerDefinition(snapshotter, 5))
-                .build();
+    @Bean
+    public SnapshotTriggerDefinition mySnapshotTriggerDefinition(Snapshotter snapshotter) {
+        return new EventCountSnapshotTriggerDefinition(snapshotter, 5);
     }
 
-    @Bean(name = "giftCardAggregateFactory")
-    public AggregateFactory<GiftCard> giftCardAggregateFactory() {
-        return new SpringPrototypeAggregateFactory<>("giftCard");
-    }
+//    @Bean(name = "giftCardRepository")
+//    public Repository<GiftCard> giftCardRepository(Snapshotter snapshotter) {
+//        return EventSourcingRepository.builder(GiftCard.class)
+//                .eventStore(eventStore)
+//                .snapshotTriggerDefinition(new EventCountSnapshotTriggerDefinition(snapshotter, 5))
+//                .build();
+//    }
+//
+//    @Bean(name = "giftCardAggregateFactory")
+//    public AggregateFactory<GiftCard> giftCardAggregateFactory() {
+//        return new SpringPrototypeAggregateFactory<>("giftCard");
+//    }
 }

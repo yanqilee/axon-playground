@@ -11,7 +11,7 @@ import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 
-@Aggregate(repository = "giftCardRepository")
+@Aggregate(snapshotTriggerDefinition = "mySnapshotTriggerDefinition")
 @NoArgsConstructor
 public class GiftCard {
 
